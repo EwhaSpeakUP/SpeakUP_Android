@@ -2,4 +2,24 @@
     <string name="app_name">SpeakUp</string>
     <string name="loading">로딩중입니다.</string>
     <string name="network_error">네트워크 연결이 원활하지 않습니다.</string>
+    <string name="complete">완료</string>
+    <string name="back_image">뒤로가기 버튼</string>
+
+    <string name="login_id_hint">아이디를 입력해주세요</string>
+    <string name="login_pwd_hint">비밀번호를 입력해주세요</string>
+    <string name="login_title">Login</string>
+    <string name="login_forgot">로그인 정보를 잊으셨나요?</string>
+    <string name="login_to_find">아이디/비밀번호 찾기</string>
+    <string name="login_none">계정이 없으신가요?</string>
+    <string name="login_to_signup">가입하기</string>
+
+    <string name="signup_title">Sign Up</string>
+    <string name="signup_name_title">이름</string>
+    <string name="signup_name_detail">(프로필 설정에서 변경 가능합니다)</string>
+    <string name="signup_id_title">아이디</string>
+    <string name="signup_pwd_title">비밀번호</string>
+    <string name="signup_pwd_check_title">비밀번호 확인</string>
+
+    <string name="assignment_title">Assignment</string>
+    <string name="assignment_translate">통역하기</string>
 </resources>

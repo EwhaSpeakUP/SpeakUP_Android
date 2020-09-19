@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".src.login.LoginActivity">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2" />
+
+    <TextView
+        android:id="@+id/login_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/app_name"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/login_et_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/bg_rounded_gray"
+        android:hint="@string/login_id_hint"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:padding="15dp"
+        android:textColor="@color/colorBlack"
+        android:textColorHint="@color/colorHint"
+        android:textSize="13sp" />
+
+    <EditText
+        android:id="@+id/login_et_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/bg_rounded_gray"
+        android:hint="@string/login_pwd_hint"
+        android:importantForAutofill="no"
+        android:inputType="textPassword"
+        android:padding="15dp"
+        android:textColor="@color/colorBlack"
+        android:textColorHint="@color/colorHint"
+        android:textSize="13sp" />
+
+    <Button
+        android:id="@+id/login_btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/bg_button_primary"
+        android:onClick="customOnClick"
+        android:padding="15dp"
+        android:text="@string/login_title"
+        android:textSize="14sp"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="25dp">
+
+        <TextView
+            android:id="@+id/login_tv_forgot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_forgot"
+            android:textColor="@color/colorDarkGray"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/login_tv_find"
+            app:layout_constraintEnd_toStartOf="@id/login_tv_find"
+            app:layout_constraintTop_toTopOf="@id/login_tv_find" />
+
+        <TextView
+            android:id="@+id/login_tv_find"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="customOnClick"
+            android:padding="5dp"
+            android:text="@string/login_to_find"
+            android:textColor="@color/colorPrimary"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="25dp">
+
+        <TextView
+            android:id="@+id/login_tv_none"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_none"
+            android:textColor="@color/colorDarkGray"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/login_tv_signup"
+            app:layout_constraintEnd_toStartOf="@id/login_tv_signup"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/login_tv_signup" />
+
+        <TextView
+            android:id="@+id/login_tv_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="customOnClick"
+            android:padding="5dp"
+            android:text="@string/login_to_signup"
+            android:textColor="@color/colorPrimary"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/login_tv_none" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
