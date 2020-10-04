@@ -3,7 +3,7 @@
     <string name="loading">로딩중입니다.</string>
     <string name="network_error">네트워크 연결이 원활하지 않습니다.</string>
     <string name="complete">완료</string>
-    <string name="back_image">뒤로가기 버튼</string>
+    <string name="back_image">뒤로가기</string>
 
     <string name="login_id_hint">아이디를 입력해주세요</string>
     <string name="login_pwd_hint">비밀번호를 입력해주세요</string>
@@ -19,6 +19,12 @@
     <string name="signup_id_title">아이디</string>
     <string name="signup_pwd_title">비밀번호</string>
     <string name="signup_pwd_check_title">비밀번호 확인</string>
+
+    <string name="main_title">강의목록</string>
+    <string name="main_empty">수강 중인 강의가 없습니다</string>
+
+    <string name="course_title">Course</string>
+    <string name="course_empty">과제가 존재하지 않습니다</string>
 
     <string name="assignment_title">Assignment</string>
     <string name="assignment_translate">통역하기</string>
