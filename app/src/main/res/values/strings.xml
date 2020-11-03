@@ -28,4 +28,8 @@
 
     <string name="assignment_title">Assignment</string>
     <string name="assignment_translate">통역하기</string>
+
+    <string name="record_audio_playing">원문 음성 재생 중</string>
+    <string name="record_audio_recording">녹음 중</string>
+    <string name="record_audio_complete">녹음 완료</string>
 </resources>

@@ -24,7 +24,7 @@ public class LoginActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.login_btn_login:
                 SharedPreferences.Editor editor = ApplicationClass.sSharedPreferences.edit();
-                editor.putInt("studentId", 1771018); //TODO: 로그인한 학생의 학번 저장
+                editor.putInt("studentId", 1771014); //TODO: 로그인한 학생의 학번 저장
                 editor.apply();
 
                 intent = new Intent(this, MainActivity.class);

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 public class CourseResult {
-    @SerializedName("hw_ids")
+    @SerializedName("courses")
     private ArrayList<Assignment> assignmentList;
 
     public ArrayList<Assignment> getAssignmentList() {

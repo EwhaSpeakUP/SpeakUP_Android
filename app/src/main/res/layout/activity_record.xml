@@ -7,6 +7,20 @@
     tools:context=".src.record.RecordActivity">
 
     <ImageView
+        android:id="@+id/record_iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/back_image"
+        android:onClick="customOnClick"
+        android:padding="5dp"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
         android:id="@+id/record_iv_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,7 +33,7 @@
         android:id="@+id/record_tv_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="원문 음성 재생 중"
+        android:text="@string/record_audio_playing"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/record_iv_image" />

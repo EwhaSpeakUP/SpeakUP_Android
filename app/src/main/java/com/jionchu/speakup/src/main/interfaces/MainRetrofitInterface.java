@@ -7,6 +7,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public interface MainRetrofitInterface {
-    @GET("/index/classList/{studentId}")
+    @GET("/index/courseList/{studentId}")
     Call<MainResponse> getCourse(@Path("studentId") int studentId);
 }

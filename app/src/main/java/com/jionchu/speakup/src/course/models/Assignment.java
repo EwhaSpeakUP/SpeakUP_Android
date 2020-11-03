@@ -3,10 +3,14 @@ package com.jionchu.speakup.src.course.models;
 import com.google.gson.annotations.SerializedName;
 
 public class Assignment {
-    @SerializedName("HW_ID")
+    @SerializedName("ASSIGNMENT_ID")
     private int assignmentId;
-    @SerializedName("HW_NAME")
+    @SerializedName("ASSIGNMENT_NAME")
     private String assignmentName;
+    @SerializedName("DUE_DATE")
+    private String dueDate;
+    @SerializedName("SUBMIT_CHECK")
+    private int submitCheck;
 
     public int getAssignmentId() {
         return assignmentId;
@@ -14,5 +18,13 @@ public class Assignment {
 
     public String getAssignmentName() {
         return assignmentName;
+    }
+
+    public String getDueDate() {
+        return dueDate;
+    }
+
+    public int getSubmitCheck() {
+        return submitCheck;
     }
 }

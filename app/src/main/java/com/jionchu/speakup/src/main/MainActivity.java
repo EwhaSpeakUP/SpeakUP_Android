@@ -62,12 +62,12 @@ public class MainActivity extends BaseActivity implements MainActivityView {
     public void getCourseSuccess(String message, MainResult result) {
         mClProgressBar.setVisibility(View.GONE);
 
-        if (result.getClassList().size() == 0)
+        if (result.getCourseList().size() == 0)
             mTvEmpty.setVisibility(View.VISIBLE);
         else
             mTvEmpty.setVisibility(View.INVISIBLE);
 
-        mCourseList.addAll(result.getClassList());
+        mCourseList.addAll(result.getCourseList());
         mCourseAdapter.notifyDataSetChanged();
     }
 

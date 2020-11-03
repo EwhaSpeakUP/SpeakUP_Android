@@ -19,10 +19,10 @@ public class CourseService {
         this.mCourseActivityView = courseActivityView;
     }
 
-    public void getAssignment(int studentId) {
+    public void getAssignment(int courseId) {
         final CourseRetrofitInterface courseRetrofitInterface = getRetrofit().create(CourseRetrofitInterface.class);
 
-        courseRetrofitInterface.getCourse(studentId).enqueue(new Callback<CourseResponse>() {
+        courseRetrofitInterface.getCourse(courseId).enqueue(new Callback<CourseResponse>() {
             @Override
             public void onResponse(@NotNull Call<CourseResponse> call, @NotNull Response<CourseResponse> response) {
                 final CourseResponse courseResponse = response.body();
