@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,9 @@ import com.jionchu.speakup.src.record.interfaces.RecordActivityView;
 import com.jionchu.speakup.src.record.models.GetFileResult;
 import com.jionchu.speakup.src.result.ResultActivity;
 
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -31,11 +35,13 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
     private ArrayList<String> mFileList;
     private TextView mTvStatus;
     private Button mBtnStop;
-    private MediaRecorder recorder = null;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private boolean permissionToRecordAccepted = false;
     private MediaPlayer mMediaPlayer;
     private int mFileIdx, mFileLength;
+    public boolean isRecording = false;
+    private String mFilepath;
+    private MediaRecorder recorder = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +55,13 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
 
         // 원문 음성 파일 조회
         tryGetFile(ApplicationClass.sSharedPreferences.getInt("assignmentId", 0));
+
+        mFilepath = getExternalCacheDir().getAbsolutePath() +"/record";
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (recorder != null) {
-            recorder.release();
-            recorder = null;
-        }
     }
 
     @Override
@@ -82,8 +86,19 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
                 if (mFileIdx < mFileList.size())
                     startAudio(mFileIdx);
                 else { // 과제 수행이 끝난 경우
-                    Intent intent = new Intent(this, ResultActivity.class);
-                    startActivity(intent);
+                    ArrayList<String> encodedFileList = new ArrayList<>();
+                    for (int i=1;i<=mFileList.size();i++) {
+                        File file = new File(mFilepath+i+".3gp");
+                        try {
+                            byte[] bytes = FileUtils.readFileToByteArray(file);
+                            String encoded = Base64.encodeToString(bytes, 0);
+                            Log.d("encoded"," string: "+encoded);
+                            encodedFileList.add(encoded);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    tryPostFile(ApplicationClass.sSharedPreferences.getInt("assignmentId", 0), encodedFileList);
                 }
                 break;
         }
@@ -93,6 +108,13 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
     private void tryGetFile(int assignmentId) {
         final RecordService recordService = new RecordService(this);
         recordService.getFile(assignmentId);
+    }
+
+    // 과제 파일 전송하기
+    private void tryPostFile(int assignmentId, ArrayList<String> encodedFileList) {
+        showProgressDialog();
+        final RecordService recordService = new RecordService(this);
+        recordService.postFile(assignmentId, encodedFileList);
     }
 
     // 원문 음성 파일 조회 성공
@@ -105,6 +127,21 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
     // 원문 음성 파일 조회 실패
     @Override
     public void getFileFailure(String message) {
+        showCustomToast(message == null || message.isEmpty() ? getString(R.string.network_error) : message);
+    }
+
+    // 과제 파일 전송 성공
+    @Override
+    public void postFileSuccess(String message) {
+        hideProgressDialog();
+        Intent intent = new Intent(this, ResultActivity.class);
+        startActivity(intent);
+    }
+
+    // 과제 파일 전송 실패
+    @Override
+    public void postFileFailure(String message) {
+        hideProgressDialog();
         showCustomToast(message == null || message.isEmpty() ? getString(R.string.network_error) : message);
     }
 
@@ -126,10 +163,11 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
                     mFileIdx++;
-                    String fileName = getExternalCacheDir().getAbsolutePath() + "/" + mFileIdx +".3gp";
+                    String fileName = mFilepath + mFileIdx +".3gp";
                     startRecord(fileName);
                 }
             });
+            mFileLength = mMediaPlayer.getDuration();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -157,6 +195,7 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
 
     // 녹음 중지
     private void stopRecord() {
+        isRecording = false;
         // 녹음 파일 저장
         mBtnStop.setVisibility(View.INVISIBLE);
         mTvStatus.setText(getString(R.string.record_audio_complete));

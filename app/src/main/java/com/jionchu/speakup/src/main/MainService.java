@@ -19,10 +19,10 @@ public class MainService {
         this.mMainActivityView = mainActivityView;
     }
 
-    public void getCourse(int studentId) {
+    public void getCourse() {
         final MainRetrofitInterface mainRetrofitInterface = getRetrofit().create(MainRetrofitInterface.class);
 
-        mainRetrofitInterface.getCourse(studentId).enqueue(new Callback<MainResponse>() {
+        mainRetrofitInterface.getCourse().enqueue(new Callback<MainResponse>() {
             @Override
             public void onResponse(@NotNull Call<MainResponse> call, @NotNull Response<MainResponse> response) {
                 final MainResponse mainResponse = response.body();

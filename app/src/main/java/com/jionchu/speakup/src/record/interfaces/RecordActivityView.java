@@ -5,4 +5,6 @@ import com.jionchu.speakup.src.record.models.GetFileResult;
 public interface RecordActivityView {
     void getFileSuccess(String message, GetFileResult result);
     void getFileFailure(String message);
+    void postFileSuccess(String message);
+    void postFileFailure(String message);
 }

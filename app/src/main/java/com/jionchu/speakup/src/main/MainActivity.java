@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.jionchu.speakup.R;
-import com.jionchu.speakup.src.ApplicationClass;
 import com.jionchu.speakup.src.BaseActivity;
 import com.jionchu.speakup.src.main.adapters.CourseAdapter;
 import com.jionchu.speakup.src.main.interfaces.MainActivityView;
@@ -41,7 +40,7 @@ public class MainActivity extends BaseActivity implements MainActivityView {
         recyclerView.setAdapter(mCourseAdapter);
 
         // 강의 목록 조회
-        tryGetCourse(ApplicationClass.sSharedPreferences.getInt("studentId", 0));
+        tryGetCourse();
     }
 
     public void customOnClick(View v) {
@@ -51,10 +50,10 @@ public class MainActivity extends BaseActivity implements MainActivityView {
     }
 
     // 강의 목록 조회하기
-    private void tryGetCourse(int studentId) {
+    private void tryGetCourse() {
         mClProgressBar.setVisibility(View.VISIBLE);
         final MainService mainService = new MainService(this);
-        mainService.getCourse(studentId);
+        mainService.getCourse();
     }
 
     // 강의 목록 조회 성공

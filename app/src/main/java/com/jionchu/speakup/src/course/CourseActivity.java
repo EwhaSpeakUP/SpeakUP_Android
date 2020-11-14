@@ -69,12 +69,14 @@ public class CourseActivity extends BaseActivity implements CourseActivityView {
     public void getAssignmentSuccess(String message, CourseResult result) {
         mClProgressBar.setVisibility(View.GONE);
 
-        if (result.getAssignmentList().size() == 0)
-            mTvEmpty.setVisibility(View.VISIBLE);
-        else
+        if (result != null &&result.getAssignmentList().size() != 0) {
             mTvEmpty.setVisibility(View.INVISIBLE);
+            mAssignmentList.addAll(result.getAssignmentList());
+        }
+        else {
+            mTvEmpty.setVisibility(View.VISIBLE);
+        }
 
-        mAssignmentList.addAll(result.getAssignmentList());
         mAssignmentAdapter.notifyDataSetChanged();
     }
 
