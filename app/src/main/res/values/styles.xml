@@ -10,4 +10,10 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
 
+    <style name="ProgressBar" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressBackgroundTint">#9c9c9c</item>
+        <item name="android:progressTint">@color/colorAccent</item>
+        <item name="android:minWidth">200dp</item>
+    </style>
+
 </resources>

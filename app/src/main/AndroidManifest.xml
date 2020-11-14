@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
-        <activity android:name=".src.result.ResultActivity"></activity>
+        <activity android:name=".src.result.ResultActivity"/>
         <activity android:name=".src.course.CourseActivity" />
         <activity android:name=".src.assignment.AssignmentActivity" />
         <activity android:name=".src.signup.SignUpActivity" />

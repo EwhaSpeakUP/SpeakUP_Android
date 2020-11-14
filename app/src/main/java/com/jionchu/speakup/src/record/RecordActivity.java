@@ -1,15 +1,18 @@
 package com.jionchu.speakup.src.record;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.jionchu.speakup.R;
@@ -38,10 +41,13 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
     private String [] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private boolean permissionToRecordAccepted = false;
     private MediaPlayer mMediaPlayer;
-    private int mFileIdx, mFileLength;
-    public boolean isRecording = false;
+    private int mFileIdx;
     private String mFilepath;
     private MediaRecorder recorder = null;
+    private ProgressBar mProgressBar;
+    private long mFileLength;
+    private int progressSeconds, progressMinutes, minutes, seconds;
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +56,16 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
 
         mTvStatus = findViewById(R.id.record_tv_status);
         mBtnStop = findViewById(R.id.record_btn_stop);
+        mProgressBar = findViewById(R.id.record_progress_bar);
         mMediaPlayer = new MediaPlayer();
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage(getString(R.string.loading));
+        mProgressDialog.setIndeterminate(true);
+
         // 원문 음성 파일 조회
         tryGetFile(ApplicationClass.sSharedPreferences.getInt("assignmentId", 0));
-
         mFilepath = getExternalCacheDir().getAbsolutePath() +"/record";
     }
 
@@ -79,27 +89,8 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
                 finish();
                 break;
             case R.id.record_btn_stop:
-                // 녹음 중지
-                stopRecord();
-
-                // 원문 음성이 남은 경우
-                if (mFileIdx < mFileList.size())
-                    startAudio(mFileIdx);
-                else { // 과제 수행이 끝난 경우
-                    ArrayList<String> encodedFileList = new ArrayList<>();
-                    for (int i=1;i<=mFileList.size();i++) {
-                        File file = new File(mFilepath+i+".3gp");
-                        try {
-                            byte[] bytes = FileUtils.readFileToByteArray(file);
-                            String encoded = Base64.encodeToString(bytes, 0);
-                            Log.d("encoded"," string: "+encoded);
-                            encodedFileList.add(encoded);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    tryPostFile(ApplicationClass.sSharedPreferences.getInt("assignmentId", 0), encodedFileList);
-                }
+                progressMinutes = minutes;
+                progressSeconds = seconds;
                 break;
         }
     }
@@ -138,6 +129,26 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
         startActivity(intent);
     }
 
+    public void showProgressDialog() {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                mProgressDialog.show();
+            }
+        });
+    }
+
+    public void hideProgressDialog() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mProgressDialog.dismiss();
+            }
+        });
+    }
+
     // 과제 파일 전송 실패
     @Override
     public void postFileFailure(String message) {
@@ -147,7 +158,11 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
 
     // 원문 음성 재생
     private void startAudio(int index) {
-        mTvStatus.setText(getString(R.string.record_audio_playing));
+        handler.post(new Runnable() {
+            public void run() {
+                mTvStatus.setText(getString(R.string.record_audio_playing));
+            }
+        });
         mBtnStop.setVisibility(View.INVISIBLE);
         try {
             mMediaPlayer.reset();
@@ -156,6 +171,14 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
                     mp.start();
+
+                    mFileLength = mMediaPlayer.getDuration();
+                    minutes = (int) (mFileLength / 1000 / 60);
+                    seconds = (int) ((mFileLength / 1000) % (60));
+                    mProgressBar.setMax(minutes*60+seconds);
+                    progressMinutes = 0;
+                    progressSeconds = -1;
+                    mProgressBar.setProgress(0);
                 }
             });
             mMediaPlayer.prepareAsync();
@@ -167,7 +190,6 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
                     startRecord(fileName);
                 }
             });
-            mFileLength = mMediaPlayer.getDuration();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -181,11 +203,41 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
         recorder.setOutputFile(fileName);
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                while (!Thread.currentThread().isInterrupted() && (progressMinutes * 60 + progressSeconds) < (minutes * 60 + seconds)) {
+                    progressSeconds += 1;
+                    if (progressSeconds == 60) {
+                        progressMinutes++;
+                        progressSeconds = 0;
+                    }
+                    handler.post(new Runnable() {
+                        public void run() {
+                            mProgressBar.setProgress(progressMinutes * 60 + progressSeconds);
+                        }
+                    });
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                stopRecord();
+            }
+        });
+
         try {
             recorder.prepare();
             recorder.start();
 
-            mTvStatus.setText(getString(R.string.record_audio_recording));
+            mProgressBar.setVisibility(View.VISIBLE);
+            thread.start();
+
+            handler.post(new Runnable() {
+                public void run() {
+                    mTvStatus.setText(getString(R.string.record_audio_recording));
+                }
+            });
             mBtnStop.setVisibility(View.VISIBLE);
         } catch (IOException e) {
             Log.e(LOG_TAG, "prepare() failed");
@@ -195,13 +247,36 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
 
     // 녹음 중지
     private void stopRecord() {
-        isRecording = false;
         // 녹음 파일 저장
         mBtnStop.setVisibility(View.INVISIBLE);
-        mTvStatus.setText(getString(R.string.record_audio_complete));
+        mProgressBar.setVisibility(View.INVISIBLE);
 
         recorder.stop();
         recorder.release();
         recorder = null;
+
+        // 원문 음성이 남은 경우
+        if (mFileIdx < mFileList.size())
+            startAudio(mFileIdx);
+        else { // 과제 수행이 끝난 경우
+            handler.post(new Runnable() {
+                public void run() {
+                    mTvStatus.setText(getString(R.string.record_audio_complete));
+                }
+            });
+            ArrayList<String> encodedFileList = new ArrayList<>();
+            for (int i=1;i<=mFileList.size();i++) {
+                File file = new File(mFilepath+i+".3gp");
+                try {
+                    byte[] bytes = FileUtils.readFileToByteArray(file);
+                    String encoded = Base64.encodeToString(bytes, 0);
+                    Log.d("encoded"," string: "+encoded);
+                    encodedFileList.add(encoded);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            tryPostFile(ApplicationClass.sSharedPreferences.getInt("assignmentId", 0), encodedFileList);
+        }
     }
 }

@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".src.record.RecordActivity">
 
+    <ProgressBar
+        android:id="@+id/record_progress_bar"
+        style="@style/ProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:visibility="invisible"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/record_iv_back" />
+
     <ImageView
         android:id="@+id/record_iv_back"
         android:layout_width="wrap_content"
