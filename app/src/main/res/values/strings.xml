@@ -4,6 +4,9 @@
     <string name="network_error">네트워크 연결이 원활하지 않습니다.</string>
     <string name="complete">완료</string>
     <string name="back_image">뒤로가기</string>
+    <string name="day_unit">일</string>
+    <string name="hour_unit">시간</string>
+    <string name="minute_unit">분</string>
 
     <string name="login_id_hint">아이디를 입력해주세요</string>
     <string name="login_pwd_hint">비밀번호를 입력해주세요</string>
@@ -34,9 +37,10 @@
     <string name="assignment_due_date">2020–11–15 00:00</string>
     <string name="assignment_remain_title">마감까지 남은 기한</string>
     <string name="assignment_remain">0분</string>
-    <string name="assignment_last_title">최종 제출 결과</string>
-    <string name="assignment_last">결과 확인</string>
+    <string name="assignment_result_title">최종 제출 결과</string>
+    <string name="assignment_result">결과 확인</string>
     <string name="assignment_translate">통역하기</string>
+    <string name="assignment_result_no">과제 제출 기록이 존재하지 않습니다.</string>
 
     <string name="record_audio_playing">원문 음성 재생 중</string>
     <string name="record_audio_recording">녹음 중</string>

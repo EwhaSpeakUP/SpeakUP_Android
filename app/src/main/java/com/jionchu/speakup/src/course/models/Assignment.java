@@ -21,7 +21,9 @@ public class Assignment {
     }
 
     public String getDueDate() {
-        return dueDate;
+        String strDueDate = dueDate.replace("T", " ");
+        strDueDate = strDueDate.substring(0,16);
+        return strDueDate;
     }
 
     public int getSubmitCheck() {

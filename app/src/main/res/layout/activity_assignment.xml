@@ -12,11 +12,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
-        android:contentDescription="@string/back_image"
         android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/back_image"
         android:onClick="customOnClick"
-        android:src="@drawable/ic_arrow_back"
         android:padding="5dp"
+        android:src="@drawable/ic_arrow_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,7 +30,7 @@
         app:layout_constraintBottom_toBottomOf="@id/assignment_iv_back"
         app:layout_constraintStart_toEndOf="@id/assignment_iv_back"
         app:layout_constraintTop_toTopOf="@id/assignment_iv_back"
-        tools:text="@string/assignment_title"/>
+        tools:text="@string/assignment_title" />
 
     <TextView
         android:id="@+id/assignment_tv_submit_title"
@@ -38,25 +38,156 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
+        android:text="@string/assignment_submit_title"
         android:textColor="@color/colorBlack"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/assignment_tv_title"
-        tools:text="@string/assignment_title"/>
+        app:layout_constraintTop_toBottomOf="@id/assignment_tv_title" />
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/bgGray"
+        app:layout_constraintBottom_toBottomOf="@id/assignment_tv_submit_title"
+        app:layout_constraintStart_toEndOf="@id/assignment_tv_remain_title"
+        app:layout_constraintTop_toTopOf="@id/assignment_tv_submit_title" />
+
+    <TextView
+        android:id="@+id/assignment_tv_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/assignment_submit_no"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/assignment_tv_submit_title"
+        app:layout_constraintStart_toEndOf="@id/assignment_divider"
+        app:layout_constraintTop_toTopOf="@id/assignment_tv_submit_title" />
+
+    <TextView
+        android:id="@+id/assignment_tv_due_date_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/assignment_due_date_title"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/assignment_tv_submit_title" />
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/bgGray"
+        app:layout_constraintBottom_toBottomOf="@id/assignment_tv_due_date_title"
+        app:layout_constraintStart_toEndOf="@id/assignment_tv_remain_title"
+        app:layout_constraintTop_toTopOf="@id/assignment_tv_due_date_title" />
+
+    <TextView
+        android:id="@+id/assignment_tv_due_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/assignment_tv_due_date_title"
+        app:layout_constraintStart_toEndOf="@id/assignment_divider"
+        app:layout_constraintTop_toTopOf="@id/assignment_tv_due_date_title"
+        tools:text="@string/assignment_due_date" />
+
+    <TextView
+        android:id="@+id/assignment_tv_remain_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/assignment_remain_title"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/assignment_tv_due_date_title" />
+
+    <View
+        android:id="@+id/assignment_divider"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/bgGray"
+        app:layout_constraintBottom_toBottomOf="@id/assignment_tv_remain_title"
+        app:layout_constraintStart_toEndOf="@id/assignment_tv_remain_title"
+        app:layout_constraintTop_toTopOf="@id/assignment_tv_remain_title" />
+
+    <TextView
+        android:id="@+id/assignment_tv_remain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/assignment_remain"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/assignment_tv_remain_title"
+        app:layout_constraintStart_toEndOf="@id/assignment_divider"
+        app:layout_constraintTop_toTopOf="@id/assignment_tv_remain_title" />
+
+    <TextView
+        android:id="@+id/assignment_tv_result_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/assignment_result_title"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/assignment_tv_remain_title" />
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/bgGray"
+        app:layout_constraintBottom_toBottomOf="@id/assignment_tv_result_title"
+        app:layout_constraintStart_toEndOf="@id/assignment_tv_remain_title"
+        app:layout_constraintTop_toTopOf="@id/assignment_tv_result_title" />
+
+    <TextView
+        android:id="@+id/assignment_tv_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:onClick="customOnClick"
+        android:text="@string/assignment_result"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@drawable/bg_rounded_gray"
+        app:layout_constraintBottom_toBottomOf="@id/assignment_tv_result_title"
+        app:layout_constraintStart_toEndOf="@id/assignment_divider"
+        app:layout_constraintTop_toTopOf="@id/assignment_tv_result_title" />
 
     <Button
         android:id="@+id/assignment_btn_record"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="25dp"
         android:background="@drawable/bg_button_primary"
         android:onClick="customOnClick"
         android:text="@string/assignment_translate"
         android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/assignment_tv_result_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

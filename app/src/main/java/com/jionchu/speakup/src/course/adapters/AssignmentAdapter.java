@@ -56,6 +56,9 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.As
                     SharedPreferences.Editor editor = ApplicationClass.sSharedPreferences.edit();
                     editor.putInt("assignmentId", mAssignmentList.get(pos).getAssignmentId());
                     editor.apply();
+                    intent.putExtra("assignmentName", mAssignmentList.get(pos).getAssignmentName());
+                    intent.putExtra("assignmentSubmit", mAssignmentList.get(pos).getSubmitCheck());
+                    intent.putExtra("assignmentDueDate", mAssignmentList.get(pos).getDueDate());
                     itemView.getContext().startActivity(intent);
                 }
             });
