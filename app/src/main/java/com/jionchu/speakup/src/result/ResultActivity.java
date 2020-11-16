@@ -1,21 +1,57 @@
 package com.jionchu.speakup.src.result;
 
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.jionchu.speakup.R;
 import com.jionchu.speakup.src.ApplicationClass;
 import com.jionchu.speakup.src.BaseActivity;
 
+import java.util.ArrayList;
+
 public class ResultActivity extends BaseActivity {
 
     private WebView mWebView;
+    private BarChart mBarChart;
+    private PieChart mPieChart;
+    private ArrayList<Integer> mBarList;
+    private ArrayList<Integer> mPieList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
+        TextView tvTitle = findViewById(R.id.result_tv_title);
         mWebView = findViewById(R.id.result_webview);
+        mBarChart = findViewById(R.id.result_barchart);
+        mPieChart = findViewById(R.id.result_piechart);
+
+        tvTitle.setText(getIntent().getStringExtra("assignmentName"));
+
+        mBarList = new ArrayList<>();
+        mPieList = new ArrayList<>();
+
+        mBarList.add(10);
+        mBarList.add(20);
+        mBarList.add(25);
+        setBarChart(mBarList, mBarChart);
+
+        mPieList.add(10);
+        mPieList.add(20);
+        mPieList.add(25);
+        setPieChart(mPieList, mPieChart);
 
         String result = "<html>\n" +
                 "  <head>\n" +
@@ -31,5 +67,50 @@ public class ResultActivity extends BaseActivity {
         mWebView.getSettings().setDisplayZoomControls(false);
         mWebView.loadData(result, "text/html", "UTF-8");
         int assignmentId = ApplicationClass.sSharedPreferences.getInt("assignmentId", 0);
+    }
+
+    public void customOnClick(View v) {
+        if (v.getId() == R.id.result_iv_back) {
+            finish();
+        }
+    }
+
+    private void setBarChart(ArrayList<Integer> countList, BarChart barChart) {
+        ArrayList<BarEntry> entryList = new ArrayList();
+
+        for (int i=0;i<countList.size();i++) {
+            entryList.add(new BarEntry(countList.get(i),i));
+        }
+
+        ArrayList<String> filler = new ArrayList<>();
+        filler.add("음");
+        filler.add("그");
+        filler.add("어");
+
+        barChart.animateY(1000);
+        barChart.setMinimumHeight(500);
+        BarDataSet barDataSet = new BarDataSet(entryList, "filler");
+        BarData data = new BarData(filler, barDataSet);
+        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        barChart.setData(data);
+    }
+
+    private void setPieChart(ArrayList<Integer> countList, PieChart pieChart) {
+        ArrayList<Entry> entryList = new ArrayList<>();
+        for (int i=0;i<countList.size();i++) {
+            entryList.add(new Entry(countList.get(i),i));
+        }
+        PieDataSet pieDatSet = new PieDataSet(entryList, "silence");
+
+        ArrayList<String> type = new ArrayList<>();
+        type.add("개시지연시간");
+        type.add("침묵");
+        type.add("발화");
+
+        pieChart.setMinimumHeight(700);
+        PieData data = new PieData(type, pieDatSet);
+        pieChart.setData(data);
+        pieDatSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        pieChart.animateXY(1000,1000);
     }
 }

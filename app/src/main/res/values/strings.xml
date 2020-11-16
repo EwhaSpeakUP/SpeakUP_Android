@@ -45,4 +45,8 @@
     <string name="record_audio_playing">원문 음성 재생 중</string>
     <string name="record_audio_recording">녹음 중</string>
     <string name="record_audio_complete">녹음 완료</string>
+
+    <string name="result_transcription">전사 결과</string>
+    <string name="result_filler">추임새 통계</string>
+    <string name="result_silence">침묵 통계</string>
 </resources>
