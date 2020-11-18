@@ -47,20 +47,17 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.As
 
             tvTitle = itemView.findViewById(R.id.item_assignment_title);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int pos = getAdapterPosition();
+            itemView.setOnClickListener(v -> {
+                int pos = getAdapterPosition();
 
-                    Intent intent = new Intent(itemView.getContext(), AssignmentActivity.class);
-                    SharedPreferences.Editor editor = ApplicationClass.sSharedPreferences.edit();
-                    editor.putInt("assignmentId", mAssignmentList.get(pos).getAssignmentId());
-                    editor.apply();
-                    intent.putExtra("assignmentName", mAssignmentList.get(pos).getAssignmentName());
-                    intent.putExtra("assignmentSubmit", mAssignmentList.get(pos).getSubmitCheck());
-                    intent.putExtra("assignmentDueDate", mAssignmentList.get(pos).getDueDate());
-                    itemView.getContext().startActivity(intent);
-                }
+                Intent intent = new Intent(itemView.getContext(), AssignmentActivity.class);
+                SharedPreferences.Editor editor = ApplicationClass.sSharedPreferences.edit();
+                editor.putInt("assignmentId", mAssignmentList.get(pos).getAssignmentId());
+                editor.apply();
+                intent.putExtra("assignmentName", mAssignmentList.get(pos).getAssignmentName());
+                intent.putExtra("assignmentSubmit", mAssignmentList.get(pos).getSubmitCheck());
+                intent.putExtra("assignmentDueDate", mAssignmentList.get(pos).getDueDate());
+                itemView.getContext().startActivity(intent);
             });
         }
     }

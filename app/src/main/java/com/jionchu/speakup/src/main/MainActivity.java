@@ -43,12 +43,6 @@ public class MainActivity extends BaseActivity implements MainActivityView {
         tryGetCourse();
     }
 
-    public void customOnClick(View v) {
-        switch (v.getId()) {
-
-        }
-    }
-
     // 강의 목록 조회하기
     private void tryGetCourse() {
         mClProgressBar.setVisibility(View.VISIBLE);

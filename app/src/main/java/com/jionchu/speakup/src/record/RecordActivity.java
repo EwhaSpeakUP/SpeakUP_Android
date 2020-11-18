@@ -131,22 +131,11 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
 
     public void showProgressDialog() {
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-
-                mProgressDialog.show();
-            }
-        });
+        runOnUiThread(() -> mProgressDialog.show());
     }
 
     public void hideProgressDialog() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mProgressDialog.dismiss();
-            }
-        });
+        runOnUiThread(() -> mProgressDialog.dismiss());
     }
 
     // 과제 파일 전송 실패
@@ -158,37 +147,27 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
 
     // 원문 음성 재생
     private void startAudio(int index) {
-        handler.post(new Runnable() {
-            public void run() {
-                mTvStatus.setText(getString(R.string.record_audio_playing));
-            }
-        });
+        handler.post(() -> mTvStatus.setText(getString(R.string.record_audio_playing)));
         mBtnStop.setVisibility(View.INVISIBLE);
         try {
             mMediaPlayer.reset();
             mMediaPlayer.setDataSource(mFileList.get(index));
-            mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-                    mp.start();
+            mMediaPlayer.setOnPreparedListener(mp -> {
+                mp.start();
 
-                    mFileLength = mMediaPlayer.getDuration();
-                    minutes = (int) (mFileLength / 1000 / 60);
-                    seconds = (int) ((mFileLength / 1000) % (60));
-                    mProgressBar.setMax(minutes*60+seconds);
-                    progressMinutes = 0;
-                    progressSeconds = -1;
-                    mProgressBar.setProgress(0);
-                }
+                mFileLength = (long)(mMediaPlayer.getDuration()*ApplicationClass.sSharedPreferences.getFloat("speed", 1));
+                minutes = (int) (mFileLength / 1000 / 60);
+                seconds = (int) ((mFileLength / 1000) % (60));
+                mProgressBar.setMax(minutes*60+seconds);
+                progressMinutes = 0;
+                progressSeconds = -1;
+                mProgressBar.setProgress(0);
             });
             mMediaPlayer.prepareAsync();
-            mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    mFileIdx++;
-                    String fileName = mFilepath + mFileIdx +".3gp";
-                    startRecord(fileName);
-                }
+            mMediaPlayer.setOnCompletionListener(mp -> {
+                mFileIdx++;
+                String fileName = mFilepath + mFileIdx +".3gp";
+                startRecord(fileName);
             });
         } catch (IOException e) {
             e.printStackTrace();
@@ -203,27 +182,21 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
         recorder.setOutputFile(fileName);
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
-        Thread thread = new Thread(new Runnable() {
-            public void run() {
-                while (!Thread.currentThread().isInterrupted() && (progressMinutes * 60 + progressSeconds) < (minutes * 60 + seconds)) {
-                    progressSeconds += 1;
-                    if (progressSeconds == 60) {
-                        progressMinutes++;
-                        progressSeconds = 0;
-                    }
-                    handler.post(new Runnable() {
-                        public void run() {
-                            mProgressBar.setProgress(progressMinutes * 60 + progressSeconds);
-                        }
-                    });
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        Thread thread = new Thread(() -> {
+            while (!Thread.currentThread().isInterrupted() && (progressMinutes * 60 + progressSeconds) < (minutes * 60 + seconds)) {
+                progressSeconds += 1;
+                if (progressSeconds == 60) {
+                    progressMinutes++;
+                    progressSeconds = 0;
                 }
-                stopRecord();
+                handler.post(() -> mProgressBar.setProgress(progressMinutes * 60 + progressSeconds));
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+            stopRecord();
         });
 
         try {
@@ -233,11 +206,7 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
             mProgressBar.setVisibility(View.VISIBLE);
             thread.start();
 
-            handler.post(new Runnable() {
-                public void run() {
-                    mTvStatus.setText(getString(R.string.record_audio_recording));
-                }
-            });
+            handler.post(() -> mTvStatus.setText(getString(R.string.record_audio_recording)));
             mBtnStop.setVisibility(View.VISIBLE);
         } catch (IOException e) {
             Log.e(LOG_TAG, "prepare() failed");
@@ -259,11 +228,7 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
         if (mFileIdx < mFileList.size())
             startAudio(mFileIdx);
         else { // 과제 수행이 끝난 경우
-            handler.post(new Runnable() {
-                public void run() {
-                    mTvStatus.setText(getString(R.string.record_audio_complete));
-                }
-            });
+            handler.post(() -> mTvStatus.setText(getString(R.string.record_audio_complete)));
             ArrayList<String> encodedFileList = new ArrayList<>();
             for (int i=1;i<=mFileList.size();i++) {
                 File file = new File(mFilepath+i+".3gp");

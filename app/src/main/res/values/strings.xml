@@ -2,6 +2,7 @@
     <string name="app_name">SpeakUp</string>
     <string name="loading">로딩중입니다.</string>
     <string name="network_error">네트워크 연결이 원활하지 않습니다.</string>
+    <string name="cancel">취소</string>
     <string name="complete">완료</string>
     <string name="back_image">뒤로가기</string>
     <string name="day_unit">일</string>
@@ -41,6 +42,11 @@
     <string name="assignment_result">결과 확인</string>
     <string name="assignment_translate">통역하기</string>
     <string name="assignment_result_no">과제 제출 기록이 존재하지 않습니다.</string>
+    <string name="assignment_speed_title">제한시간 선택</string>
+    <string name="assignment_speed_description">원문음성의 x배의 길이가 발화 제한시간으로 설정됩니다.</string>
+    <string name="assignment_speed1">1</string>
+    <string name="assignment_speed2">1.2</string>
+    <string name="assignment_speed3">1.5</string>
 
     <string name="record_audio_playing">원문 음성 재생 중</string>
     <string name="record_audio_recording">녹음 중</string>

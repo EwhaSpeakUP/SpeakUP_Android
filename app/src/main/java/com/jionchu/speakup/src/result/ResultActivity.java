@@ -76,8 +76,7 @@ public class ResultActivity extends BaseActivity {
     }
 
     private void setBarChart(ArrayList<Integer> countList, BarChart barChart) {
-        ArrayList<BarEntry> entryList = new ArrayList();
-
+        ArrayList<BarEntry> entryList = new ArrayList<>();
         for (int i=0;i<countList.size();i++) {
             entryList.add(new BarEntry(countList.get(i),i));
         }
@@ -100,17 +99,17 @@ public class ResultActivity extends BaseActivity {
         for (int i=0;i<countList.size();i++) {
             entryList.add(new Entry(countList.get(i),i));
         }
-        PieDataSet pieDatSet = new PieDataSet(entryList, "silence");
 
         ArrayList<String> type = new ArrayList<>();
         type.add("개시지연시간");
         type.add("침묵");
         type.add("발화");
 
-        pieChart.setMinimumHeight(700);
-        PieData data = new PieData(type, pieDatSet);
-        pieChart.setData(data);
-        pieDatSet.setColors(ColorTemplate.COLORFUL_COLORS);
         pieChart.animateXY(1000,1000);
+        pieChart.setMinimumHeight(700);
+        PieDataSet pieDatSet = new PieDataSet(entryList, "silence");
+        PieData data = new PieData(type, pieDatSet);
+        pieDatSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        pieChart.setData(data);
     }
 }

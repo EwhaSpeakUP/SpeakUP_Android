@@ -45,16 +45,13 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseList
 
             tvTitle = itemView.findViewById(R.id.item_course_title);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int pos = getAdapterPosition();
+            itemView.setOnClickListener(v -> {
+                int pos = getAdapterPosition();
 
-                    Intent intent = new Intent(itemView.getContext(), CourseActivity.class);
-                    intent.putExtra("courseId", mCourseList.get(pos).getCourseId());
-                    intent.putExtra("courseName", mCourseList.get(pos).getSubjectName());
-                    itemView.getContext().startActivity(intent);
-                }
+                Intent intent = new Intent(itemView.getContext(), CourseActivity.class);
+                intent.putExtra("courseId", mCourseList.get(pos).getCourseId());
+                intent.putExtra("courseName", mCourseList.get(pos).getSubjectName());
+                itemView.getContext().startActivity(intent);
             });
         }
     }

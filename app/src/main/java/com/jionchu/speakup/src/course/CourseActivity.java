@@ -50,10 +50,8 @@ public class CourseActivity extends BaseActivity implements CourseActivityView {
     }
 
     public void customOnClick(View v) {
-        switch (v.getId()) {
-            case R.id.course_iv_back:
-                finish();
-                break;
+        if (v.getId() == R.id.course_iv_back) {
+            finish();
         }
     }
 

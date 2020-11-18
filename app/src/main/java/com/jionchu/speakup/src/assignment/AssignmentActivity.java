@@ -1,12 +1,17 @@
 package com.jionchu.speakup.src.assignment;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.jionchu.speakup.R;
+import com.jionchu.speakup.src.ApplicationClass;
 import com.jionchu.speakup.src.BaseActivity;
 import com.jionchu.speakup.src.record.RecordActivity;
 import com.jionchu.speakup.src.result.ResultActivity;
@@ -20,6 +25,7 @@ import androidx.annotation.RequiresApi;
 public class AssignmentActivity extends BaseActivity {
 
     private int mSubmitStatus;
+    private AlertDialog mSpeedDialog;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -54,6 +60,31 @@ public class AssignmentActivity extends BaseActivity {
             remain = remainMinutes + getString(R.string.minute_unit);
 
         tvRemain.setText(remain);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_speed, null, false);
+        builder.setView(view);
+
+        mSpeedDialog = builder.create();
+        mSpeedDialog.setCanceledOnTouchOutside(false);
+
+        TextView tvCancel = view.findViewById(R.id.dialog_speed_tv_cancel);
+        TextView tvComplete = view.findViewById(R.id.dialog_speed_tv_complete);
+        final RadioGroup rg = view.findViewById(R.id.dialog_speed_rg);
+
+        tvCancel.setOnClickListener(v-> mSpeedDialog.dismiss());
+
+        tvComplete.setOnClickListener(v -> {
+            SharedPreferences.Editor editor = ApplicationClass.sSharedPreferences.edit();
+            switch (rg.getCheckedRadioButtonId()) {
+                case R.id.dialog_speed_rb1: editor.putFloat("speed", 1); break;
+                case R.id.dialog_speed_rb2: editor.putFloat("speed", 1.2f); break;
+                case R.id.dialog_speed_rb3: editor.putFloat("speed", 1.5f); break;
+            }
+            editor.apply();
+            Intent intent = new Intent(getApplicationContext(), RecordActivity.class);
+            startActivity(intent);
+        });
     }
 
     public void customOnClick(View v) {
@@ -67,12 +98,12 @@ public class AssignmentActivity extends BaseActivity {
                     showCustomToast(getString(R.string.assignment_result_no));
                 else {
                     intent = new Intent(this, ResultActivity.class);
+                    intent.putExtra("assignmentName", getIntent().getStringExtra("assignmentName"));
                     startActivity(intent);
                 }
                 break;
             case R.id.assignment_btn_record:
-                intent = new Intent(this, RecordActivity.class);
-                startActivity(intent);
+                mSpeedDialog.show();
                 break;
         }
     }
