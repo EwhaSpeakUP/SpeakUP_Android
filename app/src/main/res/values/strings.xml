@@ -18,11 +18,15 @@
     <string name="login_to_signup">가입하기</string>
 
     <string name="signup_title">Sign Up</string>
-    <string name="signup_name_title">이름</string>
-    <string name="signup_name_detail">(프로필 설정에서 변경 가능합니다)</string>
+    <string name="signup_student_id_title">학번</string>
+    <string name="signup_student_id_hint">학번을 입력해주세요</string>
+    <string name="signup_student_id_length">학번은 숫자 7자리로 입력해주세요</string>
     <string name="signup_id_title">아이디</string>
     <string name="signup_pwd_title">비밀번호</string>
     <string name="signup_pwd_check_title">비밀번호 확인</string>
+    <string name="signup_pwd_check_hint">비밀번호를 다시 한 번 입력해주세요</string>
+    <string name="signup_pwd_check_wrong">비밀번호가 일치하지 않습니다</string>
+    <string name="signup_complete">성공적으로 회원가입이 완료되었습니다</string>
 
     <string name="main_title">강의목록</string>
     <string name="main_empty">수강 중인 강의가 없습니다</string>
@@ -37,6 +41,7 @@
     <string name="assignment_due_date_title">종료 일시</string>
     <string name="assignment_due_date">2020–11–15 00:00</string>
     <string name="assignment_remain_title">마감까지 남은 기한</string>
+    <string name="assignment_remain_late">제출 마감이 지났습니다</string>
     <string name="assignment_remain">0분</string>
     <string name="assignment_result_title">최종 제출 결과</string>
     <string name="assignment_result">결과 확인</string>

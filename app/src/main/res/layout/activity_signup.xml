@@ -12,11 +12,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
-        android:contentDescription="@string/back_image"
         android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/back_image"
         android:onClick="customOnClick"
-        android:src="@drawable/ic_arrow_back"
         android:padding="5dp"
+        android:src="@drawable/ic_arrow_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,42 +34,33 @@
         app:layout_constraintTop_toBottomOf="@id/signup_iv_back" />
 
     <TextView
-        android:id="@+id/signup_tv_name"
+        android:id="@+id/signup_tv_student_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:text="@string/signup_name_title"
+        android:text="@string/signup_student_id_title"
         android:textColor="@color/colorBlack"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@id/signup_tv_title"
         app:layout_constraintTop_toBottomOf="@id/signup_tv_title" />
 
-    <TextView
-        android:id="@+id/signup_tv_name_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:text="@string/signup_name_detail"
-        android:textColor="@color/colorHint"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@id/signup_tv_name"
-        app:layout_constraintStart_toEndOf="@id/signup_tv_name" />
-
     <EditText
-        android:id="@+id/signup_et_name"
+        android:id="@+id/signup_et_student_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="25dp"
         android:background="@drawable/bg_rounded_gray"
-        android:hint="@null"
+        android:hint="@string/signup_student_id_hint"
         android:importantForAutofill="no"
+        android:maxLength="7"
         android:inputType="text"
         android:padding="15dp"
         android:textColor="@color/colorBlack"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/signup_tv_name" />
+        android:textColorHint="@color/colorHint"
+        android:textSize="13sp"
+        app:layout_constraintTop_toBottomOf="@id/signup_tv_student_id" />
 
     <TextView
         android:id="@+id/signup_tv_id"
@@ -80,7 +71,7 @@
         android:textColor="@color/colorBlack"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@id/signup_tv_title"
-        app:layout_constraintTop_toBottomOf="@id/signup_et_name" />
+        app:layout_constraintTop_toBottomOf="@id/signup_et_student_id" />
 
     <EditText
         android:id="@+id/signup_et_id"
@@ -90,12 +81,13 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="25dp"
         android:background="@drawable/bg_rounded_gray"
-        android:hint="@null"
+        android:hint="@string/login_id_hint"
         android:importantForAutofill="no"
         android:inputType="text"
         android:padding="15dp"
         android:textColor="@color/colorBlack"
-        android:textSize="14sp"
+        android:textColorHint="@color/colorHint"
+        android:textSize="13sp"
         app:layout_constraintTop_toBottomOf="@id/signup_tv_id" />
 
     <TextView
@@ -117,12 +109,13 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="25dp"
         android:background="@drawable/bg_rounded_gray"
-        android:hint="@null"
+        android:hint="@string/login_pwd_hint"
         android:importantForAutofill="no"
         android:inputType="textPassword"
         android:padding="15dp"
         android:textColor="@color/colorBlack"
-        android:textSize="14sp"
+        android:textColorHint="@color/colorHint"
+        android:textSize="13sp"
         app:layout_constraintTop_toBottomOf="@id/signup_tv_pwd" />
 
     <TextView
@@ -137,19 +130,20 @@
         app:layout_constraintTop_toBottomOf="@id/signup_et_pwd" />
 
     <EditText
-        android:id="@+id/signup_et_pwd_repeat"
+        android:id="@+id/signup_et_pwd_check"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="25dp"
         android:background="@drawable/bg_rounded_gray"
-        android:hint="@null"
+        android:hint="@string/signup_pwd_check_hint"
         android:importantForAutofill="no"
         android:inputType="textPassword"
         android:padding="15dp"
         android:textColor="@color/colorBlack"
-        android:textSize="14sp"
+        android:textColorHint="@color/colorHint"
+        android:textSize="13sp"
         app:layout_constraintTop_toBottomOf="@id/signup_tv_pwd_check" />
 
     <Button
@@ -166,6 +160,6 @@
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/signup_et_pwd_repeat" />
+        app:layout_constraintTop_toBottomOf="@id/signup_et_pwd_check" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

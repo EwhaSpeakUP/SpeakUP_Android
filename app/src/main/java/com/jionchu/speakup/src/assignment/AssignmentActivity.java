@@ -3,6 +3,7 @@ package com.jionchu.speakup.src.assignment;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ public class AssignmentActivity extends BaseActivity {
 
     private int mSubmitStatus;
     private AlertDialog mSpeedDialog;
+    private long mRemainMinutes;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -40,24 +42,34 @@ public class AssignmentActivity extends BaseActivity {
 
         tvTitle.setText(getIntent().getStringExtra("assignmentName"));
         mSubmitStatus = getIntent().getIntExtra("assignmentSubmit", 0);
-        if (mSubmitStatus == 0)
+        if (mSubmitStatus == 0) {
             tvSubmitStatus.setText(getString(R.string.assignment_submit_no));
-        else
+            tvSubmitStatus.setTextColor(Color.parseColor("#ffff0000"));
+        } else
             tvSubmitStatus.setText(getString(R.string.assignment_submit_yes));
         String dueDate = getIntent().getStringExtra("assignmentDueDate");
         tvDueDate.setText(dueDate);
         LocalDateTime dueDateTime = LocalDateTime.parse(dueDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-        long remainMinutes = Duration.between(LocalDateTime.now(), dueDateTime).toMinutes();
-        int remainDays = (int)remainMinutes/(60*24);
-        int remainHours = (int)remainMinutes%(60*24)/60;
-        remainMinutes = remainMinutes%60;
+        mRemainMinutes = Duration.between(LocalDateTime.now(), dueDateTime).toMinutes();
+        int remainDays;
+        int remainHours;
         String remain = "";
-        if (remainDays != 0)
-            remain += remainDays + getString(R.string.day_unit)+" ";
-        if (remainHours != 0)
-            remain += remainHours + getString(R.string.hour_unit)+" ";
-        if (remainDays == 0 && remainHours == 0)
-            remain = remainMinutes + getString(R.string.minute_unit);
+
+        if (mRemainMinutes > 0) {
+            remainDays = (int)mRemainMinutes/(60*24);
+            remainHours = (int)mRemainMinutes%(60*24)/60;
+            mRemainMinutes = mRemainMinutes%60;
+
+            if (remainDays != 0)
+                remain += remainDays + getString(R.string.day_unit)+" ";
+            if (remainHours != 0)
+                remain += remainHours + getString(R.string.hour_unit)+" ";
+            if (remainDays == 0 && remainHours == 0)
+                remain = mRemainMinutes + getString(R.string.minute_unit);
+        } else {
+            remain = getString(R.string.assignment_remain_late);
+            tvRemain.setTextColor(Color.parseColor("#ffff0000"));
+        }
 
         tvRemain.setText(remain);
 
@@ -84,6 +96,7 @@ public class AssignmentActivity extends BaseActivity {
             editor.apply();
             Intent intent = new Intent(getApplicationContext(), RecordActivity.class);
             startActivity(intent);
+            mSpeedDialog.dismiss();
         });
     }
 
@@ -103,7 +116,10 @@ public class AssignmentActivity extends BaseActivity {
                 }
                 break;
             case R.id.assignment_btn_record:
-                mSpeedDialog.show();
+                if (mRemainMinutes > 0)
+                    mSpeedDialog.show();
+                else
+                    showCustomToast(getString(R.string.assignment_remain_late));
                 break;
         }
     }

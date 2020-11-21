@@ -72,6 +72,10 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
     @Override
     public void onStop() {
         super.onStop();
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+        }
     }
 
     @Override
