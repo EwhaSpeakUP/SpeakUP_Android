@@ -68,7 +68,7 @@ public class ResultActivity extends BaseActivity implements ResultActivityView {
 
     private void setBarChart(ArrayList<Integer> countList, BarChart barChart) {
         ArrayList<BarEntry> entryList = new ArrayList<>();
-        for (int i=0;i<countList.size();i++) {
+        for (int i=0;i<3;i++) {
             entryList.add(new BarEntry(countList.get(i),i));
         }
 
@@ -79,7 +79,9 @@ public class ResultActivity extends BaseActivity implements ResultActivityView {
 
         barChart.animateY(1000);
         barChart.setMinimumHeight(500);
+        barChart.setDescription(null);
         BarDataSet barDataSet = new BarDataSet(entryList, "filler");
+        barDataSet.setValueTextSize(11);
         BarData data = new BarData(filler, barDataSet);
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         barChart.setData(data);
@@ -98,9 +100,11 @@ public class ResultActivity extends BaseActivity implements ResultActivityView {
 
         pieChart.animateXY(1000,1000);
         pieChart.setMinimumHeight(700);
-        PieDataSet pieDatSet = new PieDataSet(entryList, "");
-        PieData data = new PieData(type, pieDatSet);
-        pieDatSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        pieChart.setDescription(null);
+        PieDataSet pieDataSet = new PieDataSet(entryList, "");
+        pieDataSet.setValueTextSize(11);
+        PieData data = new PieData(type, pieDataSet);
+        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         pieChart.setData(data);
     }
 

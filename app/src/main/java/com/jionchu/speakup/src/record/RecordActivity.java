@@ -12,21 +12,23 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.jionchu.speakup.R;
 import com.jionchu.speakup.src.ApplicationClass;
 import com.jionchu.speakup.src.BaseActivity;
+import com.jionchu.speakup.src.main.MainActivity;
 import com.jionchu.speakup.src.record.interfaces.RecordActivityView;
 import com.jionchu.speakup.src.record.models.GetFileResult;
-import com.jionchu.speakup.src.result.ResultActivity;
 
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -37,6 +39,7 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private ArrayList<String> mFileList;
     private TextView mTvStatus;
+    private ImageView mIvRecorder;
     private Button mBtnStop;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private boolean permissionToRecordAccepted = false;
@@ -57,6 +60,7 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
         mTvStatus = findViewById(R.id.record_tv_status);
         mBtnStop = findViewById(R.id.record_btn_stop);
         mProgressBar = findViewById(R.id.record_progress_bar);
+        mIvRecorder = findViewById(R.id.record_iv_recorder);
         mMediaPlayer = new MediaPlayer();
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
@@ -66,7 +70,7 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
 
         // 원문 음성 파일 조회
         tryGetFile(ApplicationClass.sSharedPreferences.getInt("assignmentId", 0));
-        mFilepath = getExternalCacheDir().getAbsolutePath() +"/record";
+        mFilepath = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() +"/record";
     }
 
     @Override
@@ -129,7 +133,11 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
     @Override
     public void postFileSuccess(String message) {
         hideProgressDialog();
-        Intent intent = new Intent(this, ResultActivity.class);
+        showCustomToast(message == null || message.isEmpty() ? getString(R.string.network_error) : message);
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
@@ -151,7 +159,10 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
 
     // 원문 음성 재생
     private void startAudio(int index) {
-        handler.post(() -> mTvStatus.setText(getString(R.string.record_audio_playing)));
+        handler.post(() -> {
+            mTvStatus.setText(getString(R.string.record_audio_playing));
+            mIvRecorder.setImageResource(R.drawable.ic_audio_voice);
+        });
         mBtnStop.setVisibility(View.INVISIBLE);
         try {
             mMediaPlayer.reset();
@@ -210,7 +221,10 @@ public class RecordActivity extends BaseActivity implements RecordActivityView {
             mProgressBar.setVisibility(View.VISIBLE);
             thread.start();
 
-            handler.post(() -> mTvStatus.setText(getString(R.string.record_audio_recording)));
+            handler.post(() -> {
+                mTvStatus.setText(getString(R.string.record_audio_recording));
+                mIvRecorder.setImageResource(R.drawable.ic_record);
+            });
             mBtnStop.setVisibility(View.VISIBLE);
         } catch (IOException e) {
             Log.e(LOG_TAG, "prepare() failed");

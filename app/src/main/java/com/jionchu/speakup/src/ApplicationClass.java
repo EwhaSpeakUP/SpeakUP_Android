@@ -20,7 +20,7 @@ public class ApplicationClass extends Application {
     public static MediaType MEDIA_TYPE_JPEG = MediaType.parse("image/jpeg");
 
     // 서버 주소
-    public static String BASE_URL = "http://3.35.4.184:5000/";
+    public static String BASE_URL = "http://15.164.220.94:5000/";
 
     public static SharedPreferences sSharedPreferences = null;
 

@@ -11,10 +11,10 @@
         style="@style/ProgressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:paddingHorizontal="10dp"
         android:paddingVertical="5dp"
         android:visibility="invisible"
-        android:layout_marginTop="20dp"
         app:layout_constraintTop_toBottomOf="@id/record_iv_back" />
 
     <ImageView
@@ -32,33 +32,47 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/record_iv_image"
+        android:id="@+id/record_iv_recorder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/record_btn_stop"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/back_image"
+        android:onClick="customOnClick"
+        android:padding="5dp"
+        android:src="@drawable/ic_audio_voice"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/record_iv_back"
+        app:layout_constraintBottom_toTopOf="@id/record_btn_stop" />
 
     <TextView
         android:id="@+id/record_tv_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/record_audio_playing"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/record_iv_image" />
+        app:layout_constraintTop_toBottomOf="@id/record_iv_recorder" />
 
     <Button
         android:id="@+id/record_btn_stop"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/bg_button_primary"
         android:onClick="customOnClick"
+        android:padding="15dp"
         android:text="@string/complete"
-        android:visibility="invisible"
+        android:textColor="@color/colorWhite"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/record_tv_status" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
