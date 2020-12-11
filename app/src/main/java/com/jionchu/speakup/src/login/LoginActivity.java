@@ -37,12 +37,8 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
                     showCustomToast(getString(R.string.login_id_hint));
                 else if (pwd.isEmpty())
                     showCustomToast(getString(R.string.login_pwd_hint));
-                else {
-                    SharedPreferences.Editor editor = ApplicationClass.sSharedPreferences.edit();
-                    editor.putString("studentId", id);
-                    editor.apply();
+                else
                     tryPostLogin(id, pwd);
-                }
                 break;
             case R.id.login_tv_signup:
                 intent = new Intent(this, SignUpActivity.class);
