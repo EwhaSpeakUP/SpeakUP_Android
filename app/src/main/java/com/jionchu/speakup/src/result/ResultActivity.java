@@ -27,6 +27,7 @@ public class ResultActivity extends BaseActivity implements ResultActivityView {
     private WebView mWebView;
     private BarChart mBarChart;
     private PieChart mPieChart;
+    private TextView mTvPreparing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class ResultActivity extends BaseActivity implements ResultActivityView {
         mWebView = findViewById(R.id.result_webview);
         mBarChart = findViewById(R.id.result_barchart);
         mPieChart = findViewById(R.id.result_piechart);
+        mTvPreparing = findViewById(R.id.result_tv_preparing);
 
         tvTitle.setText(getIntent().getStringExtra("assignmentName"));
         tryGetResult(ApplicationClass.sSharedPreferences.getInt("assignmentId", 0));
@@ -47,8 +49,13 @@ public class ResultActivity extends BaseActivity implements ResultActivityView {
     }
 
     public void customOnClick(View v) {
-        if (v.getId() == R.id.result_iv_back) {
-            finish();
+        switch (v.getId()) {
+            case R.id.result_iv_back:
+                finish();
+                break;
+            case R.id.result_iv_refresh:
+                tryGetResult(ApplicationClass.sSharedPreferences.getInt("assignmentId", 0));
+                break;
         }
     }
 
@@ -108,14 +115,24 @@ public class ResultActivity extends BaseActivity implements ResultActivityView {
         pieChart.setData(data);
     }
 
+    // 과제 결과 조회 성공
     @Override
     public void getResultSuccess(String message, ResultResult result) {
         setHtml(result.getHtml());
         setBarChart(result.getFillerStatistics(), mBarChart);
         setPieChart(result.getSilenceStatistics(), mPieChart);
+        mTvPreparing.setVisibility(View.INVISIBLE);
         hideProgressDialog();
     }
 
+    // 과제 결과 생성 중
+    @Override
+    public void getResultPreparing() {
+        mTvPreparing.setVisibility(View.VISIBLE);
+        hideProgressDialog();
+    }
+
+    // 과제 결과 조회 실패
     @Override
     public void getResultFailure(String message) {
         hideProgressDialog();

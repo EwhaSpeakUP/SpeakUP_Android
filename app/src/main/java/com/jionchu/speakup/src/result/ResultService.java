@@ -30,6 +30,8 @@ public class ResultService {
                     mResultActivityView.getResultFailure(null);
                 } else if (resultResponse.getCode() == 100){
                     mResultActivityView.getResultSuccess(resultResponse.getMessage(), resultResponse.getResult());
+                } else if (resultResponse.getCode() == 203){
+                    mResultActivityView.getResultPreparing();
                 } else {
                     mResultActivityView.getResultFailure(resultResponse.getMessage());
                 }
