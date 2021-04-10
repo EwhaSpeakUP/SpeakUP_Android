@@ -8,6 +8,7 @@
 3. 통역 전사자료와 추임새 및 침묵 통계를 확인할 수 있습니다.
 
 ## :hammer: Development Environment
+- Java
 - Android Studio @4.0.1
 
 ## :bookmark: Application Version
@@ -15,6 +16,27 @@
 - targetSdkVersion : 29
 
 ## :art: Program Structure
+```
+android/app/src/main/java/com/jionchu/speakup
+  ├ config
+  │   └ XAccessTokenInterceptor : 서버에 API를 보낼 때 자동으로 Header에 X-ACCESS-TOKEN을 설정
+  └ src
+      ├ ApplicationClass : component들 사이에 공통으로 사용되는 내용 정의 (서버 url, SharedPreferences 객체 등)
+      ├ BaseActivity : Activity에서 공통으로 사용되는 함수 정의, Activity마다 상속해 사용
+      └ {feature} : feature별 폴더
+          ├ adapters : adapter 폴더
+          │   └ {Feature}Adapter.java : recyclerview 사용을 위한 adapter
+          ├ interfaces : API 관련 함수 폴더
+          │   ├ {Feature}ActivityView.java : API 호출 결과 함수 정의, Activity에서 action 구현
+          │   └ {Feature}RetrofitInterface.java : API URL에 대한 호출 함수 정의, Service에서 구현
+          ├ models : API 응답 데이터용 폴더
+          │   ├ {Feature}Response.java : API 응답 데이터
+          │   └ {Feature}Result.java : 응답 데이터 중 Activity에서 사용하는 (code, message 등을 제외한) 정보
+          ├ {Feature}Avtivity.java : feature별 화면
+          └ {Feature}Service.java : API를 호출하고 결과에 따라 함수 호출
+```
+
+## :sparkles: Features
 |         Activity         |                          Description                           |
 | :----------------------: | :------------------------------------------------------------: |
 |     `LoginActivity`      |                          로그인 화면                           |
