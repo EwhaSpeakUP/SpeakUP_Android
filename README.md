@@ -17,23 +17,23 @@
 
 ## :art: Program Structure
 ```
-android/app/src/main/java/com/jionchu/speakup
-  ├ config
-  │   └ XAccessTokenInterceptor : 서버에 API를 보낼 때 자동으로 Header에 X-ACCESS-TOKEN을 설정
-  └ src
-      ├ ApplicationClass : component들 사이에 공통으로 사용되는 내용 정의 (서버 url, SharedPreferences 객체 등)
-      ├ BaseActivity : Activity에서 공통으로 사용되는 함수 정의, Activity마다 상속해 사용
-      └ {feature} : feature별 폴더
-          ├ adapters : adapter 폴더
-          │   └ {Feature}Adapter.java : recyclerview 사용을 위한 adapter
-          ├ interfaces : API 관련 함수 폴더
-          │   ├ {Feature}ActivityView.java : API 호출 결과 함수 정의, Activity에서 action 구현
-          │   └ {Feature}RetrofitInterface.java : API URL에 대한 호출 함수 정의, Service에서 구현
-          ├ models : API 응답 데이터용 폴더
-          │   ├ {Feature}Response.java : API 응답 데이터
-          │   └ {Feature}Result.java : 응답 데이터 중 Activity에서 사용하는 (code, message 등을 제외한) 정보
-          ├ {Feature}Avtivity.java : feature별 화면
-          └ {Feature}Service.java : API를 호출하고 결과에 따라 함수 호출
+📁 app/src/main/java/com/jionchu/speakup
+ ├ 📁 config
+ │  └ 📄 XAccessTokenInterceptor.java : 서버에 API를 보낼 때 자동으로 Header에 X-ACCESS-TOKEN을 설정
+ └ 📁 src
+    ├ 📄 ApplicationClass.java : component들 사이에 공통으로 사용되는 내용 정의 (서버 url, SharedPreferences 객체 등)
+    ├ 📄 BaseActivity.java : Activity에서 공통으로 사용되는 함수 정의, Activity마다 상속해 사용
+    └ 📁 {feature} : feature별 폴더
+       ├ 📁 adapters : adapter 폴더
+       │  └ 📄 {Feature}Adapter.java : recyclerview 사용을 위한 adapter
+       ├ 📁 interfaces : API 관련 함수 폴더
+       │  ├ 📄 {Feature}ActivityView.java : API 호출 결과 함수 정의, Activity에서 action 구현
+       │  └ 📄 {Feature}RetrofitInterface.java : API URL에 대한 호출 함수 정의, Service에서 구현
+       ├ 📁 models : API 응답 데이터용 폴더
+       │  ├ 📄 {Feature}Response.java : API 응답 데이터
+       │  └ 📄 {Feature}Result.java : 응답 데이터 중 Activity에서 사용하는 (code, message 등을 제외한) 정보
+       ├ 📄 {Feature}Avtivity.java : feature별 화면
+       └ 📄 {Feature}Service.java : API를 호출하고 결과에 따라 함수 호출
 ```
 
 ## :sparkles: Features
@@ -48,17 +48,8 @@ android/app/src/main/java/com/jionchu/speakup
 |     `ResultActivity`     |       수행한 과제의 통역 전사자료 및 통계를 보여주는 화면        |
 
 ## :books: Libraries Used
-```
-implementation 'androidx.appcompat:appcompat:1.2.0'
-implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
-implementation 'androidx.cardview:cardview:1.0.0'
-implementation 'androidx.recyclerview:recyclerview:1.1.0'
-testImplementation 'junit:junit:4.12'
-androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-implementation 'com.squareup.retrofit2:retrofit:2.6.0'
-implementation("com.squareup.okhttp3:okhttp:4.0.1")
-implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-implementation 'commons-io:commons-io:2.6'
-implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
-```
+- [retrofit](https://github.com/square/retrofit) : 네트워크 통신을 위한 http client 라이브러리
+- [okhttp](https://github.com/square/okhttp) : interceptor 활용을 위해 사용한 http client 라이브러리
+- [gson](https://github.com/square/retrofit/tree/master/retrofit-converters/gson) : JSON 응답결과를 객체로 매핑해주는 converter
+- [commons-io](https://github.com/apache/commons-io) : IO 관련 라이브러리
+- [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) : 다양한 custom chart 라이브러리
