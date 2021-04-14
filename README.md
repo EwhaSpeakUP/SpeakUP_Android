@@ -7,13 +7,19 @@
 2. 녹음 기능을 통해 과제를 수행할 수 있습니다.
 3. 통역 전사자료와 추임새 및 침묵 통계를 확인할 수 있습니다.
 
-## :hammer: Development Environment
-- Java
-- Android Studio @4.0.1
+## :camera: Screenshots
+<img alt="Screenshot" src="images/screenshot.png" width="100%">
 
-## :bookmark: Application Version
-- minSdkVersion : 21
-- targetSdkVersion : 29
+## :sparkles: Features
+|         Activity         |                          Description                           |
+| :----------------------: | :------------------------------------------------------------: |
+|     `LoginActivity`      |                          로그인 화면                           |
+|     `SignUpActivity`     |                         회원가입 화면                          |
+|      `MainActivity`      |           사용자가 수강하는 과목 목록을 보여주는 화면           |
+|     `CourseActivity`     |       선택한 과목의 상세 정보와 과제 목록을 보여주는 화면       |
+|   `AssignmentActivity`   |             선택한 과제의 상세 정보를 보여주는 화면             |
+|     `RecordActivity`     |              녹음 기능을 통해 과제를 수행하는 화면              |
+|     `ResultActivity`     |       수행한 과제의 통역 전사자료 및 통계를 보여주는 화면        |
 
 ## :art: Program Structure
 ```
@@ -36,16 +42,13 @@
        └ 📄 {Feature}Service.java : API를 호출하고 결과에 따라 함수 호출
 ```
 
-## :sparkles: Features
-|         Activity         |                          Description                           |
-| :----------------------: | :------------------------------------------------------------: |
-|     `LoginActivity`      |                          로그인 화면                           |
-|     `SignUpActivity`     |                         회원가입 화면                          |
-|      `MainActivity`      |           사용자가 수강하는 과목 목록을 보여주는 화면           |
-|     `CourseActivity`     |       선택한 과목의 상세 정보와 과제 목록을 보여주는 화면       |
-|   `AssignmentActivity`   |             선택한 과제의 상세 정보를 보여주는 화면             |
-|     `RecordActivity`     |              녹음 기능을 통해 과제를 수행하는 화면              |
-|     `ResultActivity`     |       수행한 과제의 통역 전사자료 및 통계를 보여주는 화면        |
+## :hammer: Development Environment
+- Java
+- Android Studio @4.0.1
+
+## :bookmark: Application Version
+- minSdkVersion : 21
+- targetSdkVersion : 29
 
 ## :books: Libraries Used
 - [retrofit](https://github.com/square/retrofit) : 네트워크 통신을 위한 http client 라이브러리
